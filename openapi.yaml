@@ -1,0 +1,501 @@
+openapi: 3.0.0
+info:
+  title: MAD-2 Project May Term 2023
+  description: >
+    <div>This file summarises the API implementation of the Ticket Booking Web App which has been developed as the main objective of the project.
+    
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:8000/
+paths:
+  /admin_home/:
+    description: Url to read, update and delete the shows.
+    get:
+      description: Operation to read all the shows available for a user to book. Admin sign in required
+      
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: show object
+                type: object
+                properties:
+                  show_id:
+                    type: object
+                    properties:
+                      venue_id:
+                        type: integer
+                        example: 1
+                      show_id:
+                        type: integer
+                        example: 1
+                      venue:
+                        type: string
+                        example: Amanora
+                      city:
+                        type: string
+                        example: Pune
+                      area:
+                        type: string
+                        example: Magarpatta
+                      capacity:
+                        type: integer
+                        example: 500
+                      date:
+                        type: string
+                        example: 2023-04-10 9:00:00
+                      show:
+                        type: string
+                        example: The Whale
+                      description:
+                        type: string
+                        example: One of the best movies of 2022
+                      rating:
+                        type: integer
+                        example: 9.0
+                      genre:
+                        type: string
+                        example: Action. Thriller
+                      duration:
+                        type: integer
+                        example: 150
+                      price:
+                        type: integer
+                        example: 300
+                        
+        '500':
+          description: Internal server error
+  /create_show/:
+    description: Url to create a show
+    post:
+      description: Operation to create a show
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                show_name:
+                  type: string
+                  example: The Whale
+                description:
+                  type: string
+                  example: One of the best movies of 2022
+                rating:
+                  type: integer
+                  example: 9.0
+                genre:
+                  type: string
+                  example: Action. Thriller
+                duration:
+                  type: integer
+                  example: 150
+                price:
+                  type: integer
+                  example: 300
+      responses:
+        '200':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                title: show object
+                type: object
+                properties:
+                  show_name:
+                    type: string
+                    example: The Whale
+                  description:
+                    type: string
+                    example: One of the best movies of 2022
+                  rating:
+                    type: integer
+                    example: 9.0
+                  genre:
+                    type: string
+                    example: Action. Thriller
+                  duration:
+                    type: integer
+                    example: 150
+                  price:
+                    type: integer
+                    example: 300
+        '204':
+          description: Incomplete Information
+          content:
+            application/json:
+              schema:
+                title: object
+                type: object
+                properties:
+                  Status:
+                    type: string
+                    example: Kindly provide all the details
+          
+        '203':
+          description: Student already exist
+          content:
+            application/json:
+              schema:
+                title: object
+                type: object
+                properties:
+                  Status:
+                    type: string
+                    example: Show already exists
+          
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+
+  /update_show/:
+    description: Url to update show resource
+    put:
+      description: Operation to update  a show resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                show_name:
+                  type: string
+                  example: The Whale
+                description:
+                  type: string
+                  example: One of the best movies of 2022
+                rating:
+                  type: integer
+                  example: 9.0
+                genre:
+                  type: string
+                  example: Action. Thriller
+                duration:
+                  type: integer
+                  example: 150
+                price:
+                  type: integer
+                  example: 300
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  name:
+                    type: string
+                    example: The Whale
+                  description:
+                    type: string
+                    example: One of the best movies of 2022
+                  rating:
+                    type: integer
+                    example: 9.0
+                  genre:
+                    type: string
+                    example: Action. Thriller
+                  duration:
+                    type: integer
+                    example: 150
+                  price:
+                    type: integer
+                    example: 300
+        '203':
+          description: Show does ont exist
+          content:
+            application/json:
+              schema:
+                title: object
+                type: object
+                properties:
+                  Status:
+                    type: string
+                    example: Show does not exist
+        '500':
+          description: Internal Server Error
+        '400':
+          description: Bad request
+          
+  /delete_show/:
+    description: Url to delete show resource
+    post:
+      description: Operation to delete the show resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                venue_id:
+                  type: integer
+                  example: 1
+                show_id:
+                  type: integer
+                  example: 2
+                date:
+                  type: string
+                  example: 2023-04-10 15:00:00
+                  
+      responses:
+        '200':
+          description: Successfully Deleted
+          content:
+            application/json:
+              schema:
+                title: object
+                type: object
+                properties:
+                  Status:
+                    type: string
+                    example: Deleted
+        '500':
+          description: Internal Server Error
+        '203':
+          description: Show not found
+          content:
+            application/json:
+              schema:
+                title: object
+                type: object
+                properties:
+                  Status:
+                    type: string
+                    example: Show does ont exist
+
+  /create_venue/:
+    description: Url to read and add the venues.
+    post:
+      description: Operation to add a venue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                venue_ame:
+                  type: string
+                  example: Amanora
+                area:
+                  type: string
+                  example: Magarpatta
+                city:
+                  type: string
+                  example: Pune
+                capacity:
+                  type: integer
+                  example: 500
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: venue object
+                type: object
+                properties:
+                  Name:
+                    type: string
+                    example: Amanora
+                  City:
+                    type: string
+                    example: Pune
+                  Area:
+                    type: string
+                    example: Magarpatta
+                  Capacity:
+                    type: integer
+                    example: 500
+        '203':  
+          description: Venue already exists
+          content:
+            application/json:
+              schema:
+                title: object
+                type: object
+                properties:
+                  Status:
+                    type: string
+                    example: Venue already exists
+        '500':
+          description: Internal server error
+        '400':
+          description: Bad Request
+
+
+
+  /update_venue/:
+    description: Url to update and delete a venue.
+    put:
+      description: Operation to update  a venue resource
+      
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                venue_name:
+                  type: string
+                  example: Seasons
+                city:
+                  type: string
+                  example: Bangalore
+                area:
+                  type: string
+                  example: Whitefield
+                capacity:
+                  type: integer
+                  example: 500
+      responses:
+        '200':
+          description: Successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Name:
+                    type: string
+                    example: Seasons
+                  City:
+                    type: string
+                    example: Bangalore
+                  Area:
+                    type: string
+                    example: Whitefield
+                  Capacity:
+                    type: integer
+                    example: 500
+        
+        '203':
+          description: Venue does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Status:
+                    type: string
+                    example: Venue does not exist
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+
+          
+  /delete_venue/:
+    description: Url to delete venue resource
+    post:
+      description: Operation to delete the show resource
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                venue:
+                  type: string
+                  example: Seasons - Magarpatta, Pune
+                  
+      responses:
+        '200':
+          description: Successfully Deleted
+          content:
+            application/json:
+              schema:
+                title: object
+                type: object
+                properties:
+                  Status:
+                    type: string
+                    example: Deleted
+        '500':
+          description: Internal Server Error
+        '203':
+          description: Show not found
+          content:
+            application/json:
+              schema:
+                title: object
+                type: object
+                properties:
+                  Status:
+                    type: string
+                    example: Show does ont exist
+          
+  /api/all_shows/:
+    description: URL to get all the shows which are available on a venue
+    get:
+      description: URL to get all the shows which are available on a venue
+      responses:
+        '200':
+          description: Request Successful
+          content:
+            application/json:
+              schema:
+                title: show object
+                type: object
+                properties:
+                  index:
+                    type: object
+                    properties:
+                      venue_id:
+                        type: integer
+                        example: 1
+                      show_id:
+                        type: integer
+                        example: 1
+                      venue:
+                        type: string
+                        example: Amanora
+                      city:
+                        type: string
+                        example: Pune
+                      area:
+                        type: string
+                        example: Magarpatta
+                      capacity:
+                        type: integer
+                        example: 500
+                      date:
+                        type: string
+                        example: 2023-04-10 9:00:00
+                      show:
+                        type: string
+                        example: The Whale
+                      description:
+                        type: string
+                        example: One of the best movies of 2022
+                      rating:
+                        type: integer
+                        example: 9.0
+                      genre:
+                        type: string
+                        example: Action. Thriller
+                      duration:
+                        type: integer
+                        example: 150
+                      price:
+                        type: integer
+                        example: 300
+                        
+        '500':
+          description: Internal server error
+        '404':
+          description: Shows not found
+  
+    
+    
+    
+    
+    
+    
+    
